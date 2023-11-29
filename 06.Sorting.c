@@ -47,6 +47,26 @@ void insertionSort(int a[], int n) {
     }
 }
 
+int partition(int a[], int l, int h) {
+    int pivot = a[l];
+    int i = l, j = h;
+    while (i < j) {
+        while (a[i] <= pivot) {i++;}
+        while (a[j] > pivot) {j--;}
+        if (i < j) swap(&a[i], &a[j]);
+    }
+    swap(&a[l], &a[j]);
+    return j;
+}
+
+void quickSort(int a[], int l, int h) {
+    if (l < h) {
+        int j = partition(a, l, h);
+        quickSort(a, l, j-1);
+        quickSort(a, j+1, h);
+    }
+}
+
 void display(int a[], int n) {
     for (int i = 0; i < n; i++) {
         printf("%d ", a[i]);
@@ -55,16 +75,10 @@ void display(int a[], int n) {
 }
 
 int main() {
-    // int a[] = {6, 6, 6, 1, 7, 3, 1}, n = 7;
-    // display(a, n);
-    // bubbleSort(a, n);
-    // selectionSort(a, n);
-    // display(a, n);
-
     int choice, n;
     int* arr;
     while (1) {
-        printf("\nMENU\nPress 1 to enter elements into the array.\nPress 2 to display.\nPress 3 for bubble sort.\nPress 4 for selection sort.\nPress 5 for insertion sort.\nPress 6 to reset the elements in the array.\nPress 7 to exit.\n");
+        printf("\nMENU\nPress 1 to enter elements into the array.\nPress 2 to display.\nPress 3 for bubble sort.\nPress 4 for selection sort.\nPress 5 for insertion sort.\nPress 6 for quick sort.\nPress 7 to reset the elements in the array.\nPress 8 to exit.\n");
         scanf("%d", &choice);
         switch(choice) {
             case 1 :
@@ -89,6 +103,9 @@ int main() {
                 insertionSort(arr, n);
                 break;
             case 6 :
+                quickSort(arr, 0, n-1);
+                break;
+            case 7 :
                 printf("Enter %d elements : ", n);
                 for (int i = 0; i < n; i++) {
                     scanf("%d", &arr[i]);
